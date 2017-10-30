@@ -73,7 +73,12 @@
     .popup-news-4 img {width:100%;height:100%;}
     .popup-news-5 img {width:100%;height:100%;}
 
-
+    table.show {
+      display:block;
+    }
+    table.hide {
+      display:none;
+    }
   </style>
 </head>
 
@@ -107,7 +112,7 @@
           </div>
           <div class="right">
             <!-- Right link contains only icon - additional "icon-only" class-->
-            <a href="#" class="open-popup icon-only" data-popup=".popup-itemAddPopup">
+            <a href="#" class="open-popup icon-only" data-popup=".popup-itemAddPopup" style="width:30px; height:30px; margin-right:10px;">
               <i class="icon icon-bars"></i>
             </a>
           </div>
@@ -153,7 +158,7 @@
       -->
     </div>
   </div>
-  <div class="popup popup-services">
+  <div class="popup popup-services" data-popup=".test-popup">
     Any HTML content goes here
   </div>
   <!-- Path to Framework7 Library JS-->
@@ -161,17 +166,33 @@
   <!-- Path to your app js-->
   <script type="text/javascript" src="js/my-app.js"></script>
 
+  <div id="culture" style="display:none;">
+     <table style="margin-top:-10px; margin-bottom:-10px;">
+       <tr>
+         <td rowspan="3"><img src="" /></td>
+         <td class="itemTitle" style="font-size:12px;">324234234</td>
+       </tr>
+       <tr>
+         <td class="place" style="font-size:11px;"></td>
+      </tr>
+      <tr>
+        <td class="date" style="font-size:11px;"></td>
+      </tr>
+    </table>
+  </div>
 
   <!-- 아이템 폼 -->
   <div id="weather" style="display:none;">
 
     <div>
+      <!--
       <div style="font-size:12px; line-height:12px; display:inline-block; margin:10px;">
         <span>관악구</span>
       </div>
       <div style="font-size:12px; line-height:12px; float:right; margin:10px;">
         10.20 23:00 발표
       </div>
+    -->
       <div style="text-align: center;">
         <table style="width:100%; margin:0 auto;">
           <colgroup>
@@ -214,8 +235,6 @@
               <span style="font-size:30px; vertical-align:top;">℃</span>
             </div>
             <div style="text-align: right; margin-right:20px;">
-              <span style="color:#a9a9a9;">미세먼지
-                <span style="color:#000;">좋음</span>
               </span>
               <span style="margin-left:20px; color:#a9a9a9;">습도
                 <span name="reh" style="color:#000;"></span>%</span>
@@ -232,32 +251,32 @@
               <td style="vertical-align: super;" class="morning">
                 <div>오전</div>
                 <div style="display:inline-block;">
-                  <img name="weatherIcon" style="height:40px; vertical-align:top;" src="" />
-                  <span style="line-height:30px; font-size:35px;" name="t3h">8</span>
+                  <img name="weatherIcon" style="height:50px; vertical-align:top;" src="" />
+                  <span style="line-height:50px; font-size:35px;" name="t3h">-</span>
                   <span style="vertical-align:super; font-size:17px;">℃</span>
 
                 </div>
                 <div>
                   <span name="sky" style="font-size:13px;"></span>
                 </div>
-                <div>
-                  <span style="font-size:12px;" name="pop">강수 10%</span>
-                  <span style="font-size:12px;" name="reh">습도 45%</span>
+                <div style="margin-top:15px;">
+                  <span style="font-size:12px;" name="pop"></span>
+                  <span style="font-size:12px;" name="reh"></span>
                 </div>
               </td>
               <td style="vertical-align: super;" class="afternoon">
                 <div>오후</div>
                 <div style="display:inline-block;">
-                  <img name="weatherIcon" style="height:40px; vertical-align:top;" src="" />
-                  <span style="line-height:30px; font-size:35px;" name="t3h">8</span>
+                  <img name="weatherIcon" style="height:50px; vertical-align:top;" src="" />
+                  <span style="line-height:50px; font-size:35px;" name="t3h">-</span>
                   <span style="vertical-align:super; font-size:17px;">℃</span>
                 </div>
                 <div>
                   <span name="sky" style="font-size:14px;"></span>
                 </div>
-                <div>
-                  <span style="font-size:12px;" name="pop">강수 10%</span>
-                  <span style="font-size:12px;" name="reh">습도 45%</span>
+                <div style="margin-top:15px;">
+                  <span style="font-size:12px;" name="pop"></span>
+                  <span style="font-size:12px;" name="reh"></span>
                 </div>
               </td>
             </tr>
@@ -273,32 +292,32 @@
               <td style="vertical-align: super;" class="morning">
                 <div>오전</div>
                 <div style="display:inline-block;">
-                  <img name="weatherIcon" style="height:40px; vertical-align:top;" src="" />
-                  <span style="line-height:30px; font-size:35px;" name="t3h">8</span>
+                  <img name="weatherIcon" style="height:50px; vertical-align:top;" src="" />
+                  <span style="line-height:50px; font-size:35px;" name="t3h">-</span>
                   <span style="vertical-align:super; font-size:17px;">℃</span>
 
                 </div>
                 <div>
                   <span name="sky" style="font-size:13px;"></span>
                 </div>
-                <div>
-                  <span style="font-size:12px;" name="pop">강수 10%</span>
-                  <span style="font-size:12px;" name="reh">습도 45%</span>
+                <div style="margin-top:15px;">
+                  <span style="font-size:12px;" name="pop"></span>
+                  <span style="font-size:12px;" name="reh"></span>
                 </div>
               </td>
               <td style="vertical-align: super;" class="afternoon">
                 <div>오후</div>
                 <div style="display:inline-block;">
-                  <img name="weatherIcon" style="height:40px; vertical-align:top;" src="" />
-                  <span style="line-height:30px; font-size:35px;" name="t3h">8</span>
+                  <img name="weatherIcon" style="height:50px; vertical-align:top;" src="" />
+                  <span style="line-height:50px; font-size:35px;" name="t3h">-</span>
                   <span style="vertical-align:super; font-size:17px;">℃</span>
                 </div>
                 <div>
                   <span name="sky" style="font-size:14px;"></span>
                 </div>
-                <div>
-                  <span style="font-size:12px;" name="pop">강수 10%</span>
-                  <span style="font-size:12px;" name="reh">습도 45%</span>
+                <div style="margin-top:15px;">
+                  <span style="font-size:12px;" name="pop"></span>
+                  <span style="font-size:12px;" name="reh"></span>
                 </div>
               </td>
             </tr>
@@ -314,32 +333,32 @@
               <td style="vertical-align: super;" class="morning">
                 <div>오전</div>
                 <div style="display:inline-block;">
-                  <img name="weatherIcon" style="height:40px; vertical-align:top;" src="" />
-                  <span style="line-height:30px; font-size:35px;" name="t3h">8</span>
+                  <img name="weatherIcon" style="height:50px; vertical-align:top;" src="" />
+                  <span style="line-height:50px; font-size:35px;" name="t3h">-</span>
                   <span style="vertical-align:super; font-size:17px;">℃</span>
 
                 </div>
                 <div>
                   <span name="sky" style="font-size:13px;"></span>
                 </div>
-                <div>
-                  <span style="font-size:12px;" name="pop">강수 10%</span>
-                  <span style="font-size:12px;" name="reh">습도 45%</span>
+                <div style="margin-top:15px;">
+                  <span style="font-size:12px;" name="pop"></span>
+                  <span style="font-size:12px;" name="reh"></span>
                 </div>
               </td>
               <td style="vertical-align: super;" class="afternoon">
                 <div>오후</div>
                 <div style="display:inline-block;">
-                  <img name="weatherIcon" style="height:40px; vertical-align:top;" src="" />
-                  <span style="line-height:30px; font-size:35px;" name="t3h">8</span>
+                  <img name="weatherIcon" style="height:50px; vertical-align:top;" src="" />
+                  <span style="line-height:50px; font-size:35px;" name="t3h">-</span>
                   <span style="vertical-align:super; font-size:17px;">℃</span>
                 </div>
                 <div>
                   <span name="sky" style="font-size:14px;"></span>
                 </div>
-                <div>
-                  <span style="font-size:12px;" name="pop">강수 10%</span>
-                  <span style="font-size:12px;" name="reh">습도 45%</span>
+                <div style="margin-top:15px;">
+                  <span style="font-size:12px;" name="pop"></span>
+                  <span style="font-size:12px;" name="reh"></span>
                 </div>
               </td>
             </tr>
@@ -370,6 +389,30 @@
   </div>
   -->
 
+  <div class="popup popup-news-0">
+      <div class="pages">
+          <!-- Page, data-page contains page name-->
+          <div data-page="linkDetailView" class="page">
+            <!-- Scrollable page content-->
+            <div style="width:100%; text-align:right; margin:5px 0px 5px -15px; display:inline-block;"> <a href="#" class="close-popup">닫기</a></div>
+            <div class="page-content">
+              <div class="content-block" style="margin-top:0px;">
+                  <div class="card">
+                      <div class="card-header" style="display: inline-block;"><span class="t1" style="font-weight:bold;"></span><br /> 
+                        <span class="t2"></span></div>
+                      <div class="card-content"> 
+                        <div class="card-content-inner" style="word-break: break-all;">
+                            <img src="" style="width:100%; height:100%;"/>
+                            <div class="culture_content"></div>
+                            <br /><br /><br />
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
   <!-- We don't need full layout here, because this page will be parsed with Ajax-->
   <!-- Top Navbar-->
   <div class="popup popup-news-1">
@@ -381,12 +424,12 @@
             <div class="page-content">
               <div class="content-block" style="margin-top:0px;">
                   <div class="card">
-                      <div class="card-header" style="display: inline-block;"><span style="font-weight:bold;">문화/관광</span><br /> 
-                        <span>[한양도성박물관] 외국인 단체 교육프로그램 \'Hanyangdoseong Walking Tour\' 11월 교육생 모집 안내</span></div>
+                      <div class="card-header" style="display: inline-block;"><span class="t1" style="font-weight:bold;">문화/관광</span><br /> 
+                        <span class="t2">[한양도성박물관] 외국인 단체 교육프로그램 \'Hanyangdoseong Walking Tour\' 11월 교육생 모집 안내</span></div>
                       <div class="card-content"> 
                         <div class="card-content-inner" style="word-break: break-all;">
                             <img src="http://sculture.seoul.go.kr/files/2017/10/IMG_5299.jpg" style="width:100%; height:100%;"/>
-                            <p style="text-align: center;">2017년도 한양도성박물관 외국인 단체 교육프로그램</p>                            <p style="text-align: center;"> </p>                            <p style="text-align: center;"><span><strong>‘Hanyangdoseong Walking Tour’ 11월 교육생 모집 안내</strong></span></p>                            <p>&nbsp;</p>                            <p>□ 서울역사박물관 분관인 한양도성박물관에서는 <strong>서울에 거주하고 있는 유학생, 연수생 및 외국인 학교 등 단체를 대상</strong>으로  ''한양도성 워킹투어''를 운영합니다.</p>                            <p>&nbsp;</p>                            <p>□ 본 프로그램은 한국어가 익숙하지 않은 외국인도 한양도성의 역사와 가치를 배울 수 있는 기회를 제공하고자 <strong>영어 해설</strong>로 진행됩니다.</p>                            <div id="attachment_79877" class="wp-caption alignnone"><span class="wp-caption-text" id="figcaption_attachment_79877"> </span></div>                            <p>&nbsp;</p>                            <p>1. 교육운영 개요(11월)</p>                            <p>◦ 교육일시 : 11.7(화) ~ 11.28(화) 매주 화요일</p>                            <p>◦ 시 간 : 오후 2시~4시(2시간)</p>                            <p>◦ 수강료 : 무료</p>                            <p>◦ 대 상 : 서울시 내 한국어학당 외국인, 외국인 학교 어린이 단체, 외국인 연수 단체 등  단체대상</p>                            <p>◦ 인 원 : 1회당 30명 내외 참여 가능(최소 인원 10명 이상)</p>                            <p>◦ 방 법 : 영어 해설+도보 답사</p>                            <p>◦ 장 소 : 한양도성박물관 및 한양도성 낙산구간</p>                            <p>&nbsp;</p>                            <p>2. 교육 내용 및 일정</p>                            <p>◦ 교육진행 : 서울KYC도성길라잡이(영어 해설 진행)</p>                            <p>◦ 일 정</p>                            <table>                            <tbody>                            <tr>                            <td>                            <p style="text-align: center;">구 분</p>                            </td>                            <td style="text-align: center;">                            <p>시 간</p>                            </td>                            <td style="text-align: center;">                            <p>내 용</p>                            </td>                            <td style="text-align: center;">                            <p>장 소</p>                            </td>                            </tr>                            <tr>                            <td>                            <p style="text-align: center;">전시실 관람</p>                            </td>                            <td>                            <p style="text-align: center;">20분</p>                            </td>                            <td>                            <p style="text-align: center;">한양도성 박물관 소개 및 관람</p>                            </td>                            <td>                            <p style="text-align: center;">3층 상설전시실</p>                            </td>                            </tr>                            <tr>                            <td>                            <p style="text-align: center;">탐 방</p>                            </td>                            <td>                            <p style="text-align: center;">90분</p>                            </td>                            <td>                            <p style="text-align: center;">&lt;탐방&gt; 흥인지문 → 낙산 정상 → 혜화문 앞</p>                            </td>                            <td>                            <p style="text-align: center;">낙산구간</p>                            </td>                            </tr>                            <tr>                            <td style="text-align: center;">                            <p>정 리</p>                            </td>                            <td style="text-align: center;">                            <p>10분</p>                            </td>                            <td style="text-align: center;">                            <p>교육 설문조사</p>                            </td>                            <td>                            <p style="text-align: center;">낙산구간</p>                            </td>                            </tr>                            </tbody>                            </table>                            <p>※세부 일정 및 집결 장소는 교육 상황에 따라 변동 가능</p>                            <p>&nbsp;</p>                            <p>3. 교육신청 방법</p>                            <p>◦ 기 간: 10월 26일 ~ 교육 신청 마감 시까지</p>                            <p>◦ 방 법 : 전화(한양도성연구소 02-724-0289)로 접수 후 참여 신청서를 메일 또는 팩스로 전송</p>                            <p>&nbsp;</p>                            <p>4. 문의처</p>                            <p>◦ 한양도성연구소 02)724-0289 / 724-0239</p>                            <p>◦ 자세한 안내 및 신청서 다운로드는 서울역사박물관 홈페이지-교육 예약(외국인프로그램)을 참조하시기 바랍니다.</p>                            <p>-&gt; http://www.museum.seoul.kr/www/board/NR_boardView.do?sso=ok</p>""<p style="text-align: center;">2017년도 한양도성박물관 외국인 단체 교육프로그램</p><p style="text-align: center;"> </p><p style="text-align: center;"><span><strong>‘Hanyangdoseong Walking Tour’ 11월 교육생 모집 안내</strong></span></p><p>&nbsp;</p><p>□ 서울역사박물관 분관인 한양도성박물관에서는 <strong>서울에 거주하고 있는 유학생, 연수생 및 외국인 학교 등 단체를 대상</strong>으로  ''한양도성 워킹투어''를 운영합니다.</p><p>&nbsp;</p><p>□ 본 프로그램은 한국어가 익숙하지 않은 외국인도 한양도성의 역사와 가치를 배울 수 있는 기회를 제공하고자 <strong>영어 해설</strong>로 진행됩니다.</p><div id="attachment_79877" class="wp-caption alignnone"><span class="wp-caption-text" id="figcaption_attachment_79877"> </span></div><p>&nbsp;</p><p>1. 교육운영 개요(11월)</p><p>◦ 교육일시 : 11.7(화) ~ 11.28(화) 매주 화요일</p><p>◦ 시 간 : 오후 2시~4시(2시간)</p><p>◦ 수강료 : 무료</p><p>◦ 대 상 : 서울시 내 한국어학당 외국인, 외국인 학교 어린이 단체, 외국인 연수 단체 등  단체대상</p><p>◦ 인 원 : 1회당 30명 내외 참여 가능(최소 인원 10명 이상)</p><p>◦ 방 법 : 영어 해설+도보 답사</p><p>◦ 장 소 : 한양도성박물관 및 한양도성 낙산구간</p><p>&nbsp;</p><p>2. 교육 내용 및 일정</p><p>◦ 교육진행 : 서울KYC도성길라잡이(영어 해설 진행)</p><p>◦ 일 정</p><table><tbody><tr><td><p style="text-align: center;">구 분</p></td><td style="text-align: center;"><p>시 간</p></td><td style="text-align: center;"><p>내 용</p></td><td style="text-align: center;"><p>장 소</p></td></tr><tr><td><p style="text-align: center;">전시실 관람</p></td><td><p style="text-align: center;">20분</p></td><td><p style="text-align: center;">한양도성 박물관 소개 및 관람</p></td><td><p style="text-align: center;">3층 상설전시실</p></td></tr><tr><td><p style="text-align: center;">탐 방</p></td><td><p style="text-align: center;">90분</p></td><td><p style="text-align: center;">&lt;탐방&gt; 흥인지문 → 낙산 정상 → 혜화문 앞</p></td><td><p style="text-align: center;">낙산구간</p></td></tr><tr><td style="text-align: center;"><p>정 리</p></td><td style="text-align: center;"><p>10분</p></td><td style="text-align: center;"><p>교육 설문조사</p></td><td><p style="text-align: center;">낙산구간</p></td></tr></tbody></table><p>※세부 일정 및 집결 장소는 교육 상황에 따라 변동 가능</p><p>&nbsp;</p><p>3. 교육신청 방법</p><p>◦ 기 간: 10월 26일 ~ 교육 신청 마감 시까지</p><p>◦ 방 법 : 전화(한양도성연구소 02-724-0289)로 접수 후 참여 신청서를 메일 또는 팩스로 전송</p><p>&nbsp;</p><p>4. 문의처</p><p>◦ 한양도성연구소 02)724-0289 / 724-0239</p><p>◦ 자세한 안내 및 신청서 다운로드는 서울역사박물관 홈페이지-교육 예약(외국인프로그램)을 참조하시기 바랍니다.</p><p>-&gt; http://www.museum.seoul.kr/www/board/NR_boardView.do?sso=ok</p>
+                            <p class="c1" style="text-align: center;">2017년도 한양도성박물관 외국인 단체 교육프로그램</p>                            <p style="text-align: center;"> </p>                            <p style="text-align: center;"><span><strong>‘Hanyangdoseong Walking Tour’ 11월 교육생 모집 안내</strong></span></p>                            <p>&nbsp;</p>                            <p>□ 서울역사박물관 분관인 한양도성박물관에서는 <strong>서울에 거주하고 있는 유학생, 연수생 및 외국인 학교 등 단체를 대상</strong>으로  ''한양도성 워킹투어''를 운영합니다.</p>                            <p>&nbsp;</p>                            <p>□ 본 프로그램은 한국어가 익숙하지 않은 외국인도 한양도성의 역사와 가치를 배울 수 있는 기회를 제공하고자 <strong>영어 해설</strong>로 진행됩니다.</p>                            <div id="attachment_79877" class="wp-caption alignnone"><span class="wp-caption-text" id="figcaption_attachment_79877"> </span></div>                            <p>&nbsp;</p>                            <p>1. 교육운영 개요(11월)</p>                            <p>◦ 교육일시 : 11.7(화) ~ 11.28(화) 매주 화요일</p>                            <p>◦ 시 간 : 오후 2시~4시(2시간)</p>                            <p>◦ 수강료 : 무료</p>                            <p>◦ 대 상 : 서울시 내 한국어학당 외국인, 외국인 학교 어린이 단체, 외국인 연수 단체 등  단체대상</p>                            <p>◦ 인 원 : 1회당 30명 내외 참여 가능(최소 인원 10명 이상)</p>                            <p>◦ 방 법 : 영어 해설+도보 답사</p>                            <p>◦ 장 소 : 한양도성박물관 및 한양도성 낙산구간</p>                            <p>&nbsp;</p>                            <p>2. 교육 내용 및 일정</p>                            <p>◦ 교육진행 : 서울KYC도성길라잡이(영어 해설 진행)</p>                            <p>◦ 일 정</p>                            <table>                            <tbody>                            <tr>                            <td>                            <p style="text-align: center;">구 분</p>                            </td>                            <td style="text-align: center;">                            <p>시 간</p>                            </td>                            <td style="text-align: center;">                            <p>내 용</p>                            </td>                            <td style="text-align: center;">                            <p>장 소</p>                            </td>                            </tr>                            <tr>                            <td>                            <p style="text-align: center;">전시실 관람</p>                            </td>                            <td>                            <p style="text-align: center;">20분</p>                            </td>                            <td>                            <p style="text-align: center;">한양도성 박물관 소개 및 관람</p>                            </td>                            <td>                            <p style="text-align: center;">3층 상설전시실</p>                            </td>                            </tr>                            <tr>                            <td>                            <p style="text-align: center;">탐 방</p>                            </td>                            <td>                            <p style="text-align: center;">90분</p>                            </td>                            <td>                            <p style="text-align: center;">&lt;탐방&gt; 흥인지문 → 낙산 정상 → 혜화문 앞</p>                            </td>                            <td>                            <p style="text-align: center;">낙산구간</p>                            </td>                            </tr>                            <tr>                            <td style="text-align: center;">                            <p>정 리</p>                            </td>                            <td style="text-align: center;">                            <p>10분</p>                            </td>                            <td style="text-align: center;">                            <p>교육 설문조사</p>                            </td>                            <td>                            <p style="text-align: center;">낙산구간</p>                            </td>                            </tr>                            </tbody>                            </table>                            <p>※세부 일정 및 집결 장소는 교육 상황에 따라 변동 가능</p>                            <p>&nbsp;</p>                            <p>3. 교육신청 방법</p>                            <p>◦ 기 간: 10월 26일 ~ 교육 신청 마감 시까지</p>                            <p>◦ 방 법 : 전화(한양도성연구소 02-724-0289)로 접수 후 참여 신청서를 메일 또는 팩스로 전송</p>                            <p>&nbsp;</p>                            <p>4. 문의처</p>                            <p>◦ 한양도성연구소 02)724-0289 / 724-0239</p>                            <p>◦ 자세한 안내 및 신청서 다운로드는 서울역사박물관 홈페이지-교육 예약(외국인프로그램)을 참조하시기 바랍니다.</p>                            <p>-&gt; http://www.museum.seoul.kr/www/board/NR_boardView.do?sso=ok</p>""<p style="text-align: center;">2017년도 한양도성박물관 외국인 단체 교육프로그램</p><p style="text-align: center;"> </p><p style="text-align: center;"><span><strong>‘Hanyangdoseong Walking Tour’ 11월 교육생 모집 안내</strong></span></p><p>&nbsp;</p><p>□ 서울역사박물관 분관인 한양도성박물관에서는 <strong>서울에 거주하고 있는 유학생, 연수생 및 외국인 학교 등 단체를 대상</strong>으로  ''한양도성 워킹투어''를 운영합니다.</p><p>&nbsp;</p><p>□ 본 프로그램은 한국어가 익숙하지 않은 외국인도 한양도성의 역사와 가치를 배울 수 있는 기회를 제공하고자 <strong>영어 해설</strong>로 진행됩니다.</p><div id="attachment_79877" class="wp-caption alignnone"><span class="wp-caption-text" id="figcaption_attachment_79877"> </span></div><p>&nbsp;</p><p>1. 교육운영 개요(11월)</p><p>◦ 교육일시 : 11.7(화) ~ 11.28(화) 매주 화요일</p><p>◦ 시 간 : 오후 2시~4시(2시간)</p><p>◦ 수강료 : 무료</p><p>◦ 대 상 : 서울시 내 한국어학당 외국인, 외국인 학교 어린이 단체, 외국인 연수 단체 등  단체대상</p><p>◦ 인 원 : 1회당 30명 내외 참여 가능(최소 인원 10명 이상)</p><p>◦ 방 법 : 영어 해설+도보 답사</p><p>◦ 장 소 : 한양도성박물관 및 한양도성 낙산구간</p><p>&nbsp;</p><p>2. 교육 내용 및 일정</p><p>◦ 교육진행 : 서울KYC도성길라잡이(영어 해설 진행)</p><p>◦ 일 정</p><table><tbody><tr><td><p style="text-align: center;">구 분</p></td><td style="text-align: center;"><p>시 간</p></td><td style="text-align: center;"><p>내 용</p></td><td style="text-align: center;"><p>장 소</p></td></tr><tr><td><p style="text-align: center;">전시실 관람</p></td><td><p style="text-align: center;">20분</p></td><td><p style="text-align: center;">한양도성 박물관 소개 및 관람</p></td><td><p style="text-align: center;">3층 상설전시실</p></td></tr><tr><td><p style="text-align: center;">탐 방</p></td><td><p style="text-align: center;">90분</p></td><td><p style="text-align: center;">&lt;탐방&gt; 흥인지문 → 낙산 정상 → 혜화문 앞</p></td><td><p style="text-align: center;">낙산구간</p></td></tr><tr><td style="text-align: center;"><p>정 리</p></td><td style="text-align: center;"><p>10분</p></td><td style="text-align: center;"><p>교육 설문조사</p></td><td><p style="text-align: center;">낙산구간</p></td></tr></tbody></table><p>※세부 일정 및 집결 장소는 교육 상황에 따라 변동 가능</p><p>&nbsp;</p><p>3. 교육신청 방법</p><p>◦ 기 간: 10월 26일 ~ 교육 신청 마감 시까지</p><p>◦ 방 법 : 전화(한양도성연구소 02-724-0289)로 접수 후 참여 신청서를 메일 또는 팩스로 전송</p><p>&nbsp;</p><p>4. 문의처</p><p>◦ 한양도성연구소 02)724-0289 / 724-0239</p><p>◦ 자세한 안내 및 신청서 다운로드는 서울역사박물관 홈페이지-교육 예약(외국인프로그램)을 참조하시기 바랍니다.</p><p>-&gt; http://www.museum.seoul.kr/www/board/NR_boardView.do?sso=ok</p>
                             <br /><br /><br />
                         </div>
                       </div>

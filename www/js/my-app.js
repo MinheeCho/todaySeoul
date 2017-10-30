@@ -4,7 +4,8 @@ var myApp = new Framework7({
     modalTitle: '오늘도 서울',
     material: isAndroid ? true : false,
     // Enable Template7 pages
-    template7Pages: true
+    template7Pages: true,
+    pushState: true
 });
 
 var isAndroid = Framework7.prototype.device.android === true;
@@ -106,6 +107,10 @@ $$(document).on('DOMContentLoaded', function (e) {
 
         setItemList(tmpUseList, tmpApiList);
 
+    });
+
+    $$('.popup-itemAddPopup').on('popup:closed', function () {
+        window.location.reload(true);
     });
 
 
@@ -331,6 +336,106 @@ function setItemList(useList, apiList) {
     });
 }
 
+function getCulture() {
+//http://openAPI.seoul.go.kr:8088/(인증키)/xml/SearchConcertDetailService/1/20/23075/
+    var div = $$('<div />');//;.addClass('list-block media-list');
+    var ul = $$('<ul />').css('list-style','none').css('padding-left', '10px');
+    $$.ajax({
+        /*
+        type: 'GET',
+        dataType: 'jsonp',
+        jsonp : "callback",
+        data: data,
+        async: false,
+        origin: 'http://newsky2.kma.go.kr/',
+        url: url + method,
+
+        // jsonp 값을 전달할 때 사용되는 파라미터 변수명
+        // 이 속성을 생략하면 callback 파라미터 변수명으로 전달된다.
+        jsonp: 'stone',
+        */
+        url: 'http://openAPI.seoul.go.kr:8088/'+cultureKey+'/json/SearchConcertDetailService/1/20/',
+        contentType: "OPTIONS",
+        dataType : 'json',
+        crossDomain: true,
+        //data: data,
+        async: false,
+        success: function (json) {
+            console.log('28923842384');
+            console.log(json.SearchConcertDetailService.row);
+            var items = json.SearchConcertDetailService.row;
+    
+            
+            for(var i = 0; i < items.length; i++) {
+                var el =$$($$('#culture').html());
+                el.find('img').attr('src', items[i].MAIN_IMG).css('width','60px').css('height','60px');
+                el.find('.itemTitle').html(items[i].TITLE);
+                if(items[i].TITLE.length > 15) {
+                    //el.find('.item-title').html(items[i].TITLE.substring(0, 14));
+                }
+                el.find('.place').html('<span style="font-weight:bold;">'+items[i].CODENAME+'</span> | ' + items[i].GCODE + ' | ' + items[i].PLACE);
+                el.find('.item-inner').css('margin-left', '10px').css('line-height','23px').css('color', '#000').css('max-width', '200px');
+                var msg = '';
+                if(items[i].STRTDATE == items[i].END_DATE) {
+                    msg = items[i].STRTDATE + ' ~ ' + items[i].END_DATE;
+                    msg += '. ' + items[i].TIME;
+                }else {
+                    msg = items[i].STRTDATE;
+                    msg += '. ' + items[i].TIME;
+                }
+                el.find('.date').text(msg);
+
+            //el.find('.titmeTitle').on('click', function(){
+                    // 템플릿을 복사해서
+                    console.log('하하하하');
+                    
+                    var tmp = $$($$('.popup-news-0').html());
+                    tmp.find('.card-header span.t1').text(items[i].CODE_NAME);
+                    tmp.find('.card-header span.t2').text(items[i].TITLE);
+                    tmp.find('.card-content img').attr('src', items[i].MAIN_IMG);
+                    var content = '<span style="font-weight:bold;">장소</span> : ' + items[i].GCODE + ' ' + items[i].PLACE + '<br />';
+                    content += '<span style="font-weight:bold;">시간</span> : ' + msg + '<br />';
+                    content += '<span style="font-weight:bold;">가격</span> : ' + items[i].USE_FEE + '<br />';
+                    content += '<span style="font-weight:bold;">나이</span> : ' + items[i].USE_TRGT + '<br />';
+                    content += '<span style="font-weight:bold;">문의</span> : ' + items[i].INQUIRY + '<br />';
+                    content += items[i].CONTENTS;
+                    if(content == '') {
+                        content += '<a href="' + items[i].ORG_LINK + '">' + items[i].ORG_LINK + '</a>';
+                    }
+                    tmp.find('.card-content-inner').append(content);
+                    var popupDiv = $$('<div />').addClass('popup').addClass('popup-culture-' + i);
+                    popupDiv.append(tmp);
+                    $$('body').append(popupDiv);
+                    //myApp.popup('.popup-culture-' + i);
+                    console.log('하하하하');
+                    // 팝업을 띄운다!
+            //    });
+                
+                
+    //            var li = $$('<li />');
+    //            li.append(el);
+    //           ul.append(li);
+                el.attr('name', 'culture_table_' + i).addClass('cultureTable').attr('idx', i);
+                if(i != 0) {
+                    el.addClass('hide');
+                }else {
+                    el.addClass('show');
+                }
+                var a = $$('<a />').attr('href', '#').addClass('open-popup').attr('data-popup', '.popup-culture-' + i).css('color', '#000');
+                a.append(el);
+            div.append(a);
+            }
+        }
+    });
+
+    
+    
+    return div.html();
+    //return $$('#culture').html();
+
+
+}
+
 // 메인 화면 서울시 새소식 12개 기관
 function getNews() {
 
@@ -343,7 +448,7 @@ function getNews() {
         //'BLOG_ID': 15 : 건강, 21 : 교통, 22 : 안전, 23 : 주택, 24 : 경제, 25 : 환경, 26 : 문화/관광, 27 : 복지, 28 : 건설, 29 : 세금재정, 30 : 행정, 34 : 여성가족
     };
     var url = 'http://openapi.seoul.go.kr:8088/'+newsKey+'/json/SeoulNewsList/1/500/';
-    var html = '조민희';
+    var html = '';
     var tmpDiv = $$('<div />');
     var listDiv = $$('<div />').addClass('list-block');
     var listUl = $$('<ul />');
@@ -461,13 +566,13 @@ function getWeather() {
         4: '흐림'
     }
     var skyData2 = {
-        0: '없음',
+        0: '',
         1: '비',
         2: '진눈개비',
         3: '눈'
     }
     var rn1Data_1 = {
-        0: '없음',
+        0: '',
         1: '1mm 미만',
         5: '1~4mm',
         10: '5~9mm',
@@ -478,7 +583,7 @@ function getWeather() {
     }
 
     var rn1Data_2 = {
-        0: '없음',
+        0: '',
         1: '1cm 미만',
         5: '1~4cm',
         10: '5~9cm',
@@ -523,8 +628,8 @@ function getWeather() {
 
     data = {
         'serviceKey': wheaterServiceKey,
-        'base_date': '20171030',
-        'base_time': '0600',
+        'base_date': base_date,
+        'base_time': base_time,
         'nx': nx,
         'ny': ny,
         'numOfRows': numOfRows,
@@ -612,7 +717,7 @@ function getWeather() {
     numOfRows = 225;
     data = {
         'serviceKey': wheaterServiceKey,
-        'base_date': '20171030',
+        'base_date': base_date,
         'base_time': '0500',
         'nx': nx,
         'ny': ny,
@@ -782,8 +887,10 @@ function setMainList(useList) {
         // HTML Element Setting
         var cardDiv = $$('<div />').addClass('card');
         var cardHeaderDiv = $$('<div />').addClass('card-header');
-        cardHeaderDiv.css('min-height', '30px').css('font-size', '13px');
-        var cardHeaderDivDetail = $$('<span />').css('float', 'right').css('margin-right', '0px').text('+ 더보기');
+        cardHeaderDiv.css('min-height', '30px').css('font-size', '13px').css('margin-left', '10px');
+        var cardHeaderDivDetail = $$('<a />').css('margin-right', '0px');//.text('+ 더보기');
+        var cardHeaderDivDetail2 = $$('<a />').css('margin-right', '0px');//.text('+ 더보기');
+        var cardHeaderDivOpt = $$('<div />').css('float', 'right');
         var cardContentDiv = $$('<div />').addClass('card-content');
         var cardContentInnerDiv = $$('<div />').addClass('card-content-inner');
         cardDiv.append(cardHeaderDiv);
@@ -792,8 +899,67 @@ function setMainList(useList) {
         
         // Data Setting
         cardHeaderDiv.text(useList[i].title);
-        if(useList[i].itemCd == 1) {
-            cardHeaderDiv.append(cardHeaderDivDetail);
+        if(useList[i].title == '문화행사') {
+            cardHeaderDivDetail.text('다음');
+            cardHeaderDivDetail2.text('이전').css('margin-right','5px');
+            cardHeaderDivDetail.on('click', function(){
+                console.log(34);
+                var currntIdx = Number($$(this).parent().parent().parent().find('table.show').attr('idx'));
+                var tables = $$(this).parent().parent().parent().find('table');
+                currntIdx += 1;
+                for(var j = 0; j < tables.length; j++) {
+                    $$(tables[j]).removeClass('show').addClass('hide');
+                    if(currntIdx == j) {
+                        $$(tables[j]).addClass('show').removeClass('hide');
+                    }
+
+                }
+
+                console.log(currntIdx +'_'+tables.length);
+                if(currntIdx + 1 == tables.length) {
+                    cardHeaderDivDetail.hide();
+                }else {
+                    cardHeaderDivDetail.show();
+                }
+                if(currntIdx != 0) {
+                    cardHeaderDivDetail2.show();
+                }else {
+                    cardHeaderDivDetail2.hide();
+                }
+            });
+
+            cardHeaderDivDetail2.on('click', function(){
+                console.log(34);
+                var currntIdx = Number($$(this).parent().parent().parent().find('table.show').attr('idx'));
+                var tables = $$(this).parent().parent().parent().find('table');
+                currntIdx -= 1;
+                for(var j = 0; j < tables.length; j++) {
+                    $$(tables[j]).removeClass('show').addClass('hide');
+                    if(currntIdx == j) {
+                        $$(tables[j]).addClass('show').removeClass('hide');
+                    }
+
+                }
+
+                console.log(currntIdx +'_'+tables.length);
+                if(currntIdx - 1 == 0) {
+                    cardHeaderDivDetail2.hide();
+                }else {
+                    cardHeaderDivDetail2.show();
+                }
+
+                if(currntIdx + 1 != tables.length) {
+                    cardHeaderDivDetail.show();
+                }else {
+                    cardHeaderDivDetail.hide();
+                }
+                
+            });
+
+            cardHeaderDivOpt.append(cardHeaderDivDetail2.hide());
+            cardHeaderDivOpt.append(cardHeaderDivDetail);
+
+            cardHeaderDiv.append(cardHeaderDivOpt);
         }
         cardContentInnerDiv.append(eval(useList[i].func));
 
