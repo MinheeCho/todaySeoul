@@ -556,7 +556,6 @@ function getWeather() {
         success: function (json) {
             console.log(json)
             var items = json.response.body.items.item;
-            console.log(JSON.parse(json));
             // TODO 데이터 못 가져오는 경우 처리 하자
             for (var i = 0; i < items.length; i++) {
                 console.log(items[i].category + ' ' + items[i].obsrValue);
