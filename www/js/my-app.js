@@ -534,6 +534,7 @@ function getWeather() {
 
     var form = $$('#weather');
     $$.ajax({
+        /*
         type: 'GET',
         dataType: 'jsonp',
         jsonp : "callback",
@@ -541,9 +542,17 @@ function getWeather() {
         async: false,
         origin: 'http://newsky2.kma.go.kr/',
         url: url + method,
+
         // jsonp 값을 전달할 때 사용되는 파라미터 변수명
         // 이 속성을 생략하면 callback 파라미터 변수명으로 전달된다.
         jsonp: 'stone',
+        */
+        url: url + method,
+        contentType: "OPTIONS",
+        dataType : 'json',
+        crossDomain: true,
+        data: data,
+        async: false,
         success: function (json) {
             console.log(json)
             var items = JSON.parse(json).response.body.items.item;
@@ -615,6 +624,7 @@ function getWeather() {
 
     method = 'ForecastSpaceData';
     $$.ajax({
+        /*
         type: 'GET',
         dataType: 'jsonp',
         data: data,
@@ -625,6 +635,13 @@ function getWeather() {
         // jsonp 값을 전달할 때 사용되는 파라미터 변수명
         // 이 속성을 생략하면 callback 파라미터 변수명으로 전달된다.
         jsonp: 'stone',
+        */
+        url: url + method,
+        contentType: "OPTIONS",
+        dataType : 'json',
+        crossDomain: true,
+        data: data,
+        async: false,
         success: function (json) {
             // 날짜별 오전9시, 오후 3시 데이터 생성
             var tmpFcstDate = '';
