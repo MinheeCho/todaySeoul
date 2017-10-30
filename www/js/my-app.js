@@ -536,6 +536,7 @@ function getWeather() {
     $$.ajax({
         type: 'GET',
         dataType: 'jsonp',
+        jsonp : "callback",
         data: data,
         async: false,
         origin: 'http://newsky2.kma.go.kr/',
@@ -617,6 +618,7 @@ function getWeather() {
         type: 'GET',
         dataType: 'jsonp',
         data: data,
+        jsonp : "callback",
         async: false,
         origin: 'http://newsky2.kma.go.kr/',
         url: url + method,
