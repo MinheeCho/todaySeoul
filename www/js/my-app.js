@@ -555,7 +555,7 @@ function getWeather() {
         async: false,
         success: function (json) {
             console.log(json)
-            var items = JSON.parse(json).response.body.items.item;
+            var items = json.response.body.items.item;
             console.log(JSON.parse(json));
             // TODO 데이터 못 가져오는 경우 처리 하자
             for (var i = 0; i < items.length; i++) {
@@ -646,7 +646,7 @@ function getWeather() {
             // 날짜별 오전9시, 오후 3시 데이터 생성
             var tmpFcstDate = '';
             var arr = new Array();
-            var items = JSON.parse(json).response.body.items.item;
+            var items = json.response.body.items.item;
 
             // day 구하기
             for (var i = 0; i < items.length; i++) {
