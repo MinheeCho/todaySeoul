@@ -51,9 +51,6 @@ var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
 
-document.addEventListener("deviceready", function () {
-    window.location.reload(true);
-}, false);
 
 $$(document).on('DOMContentLoaded', function (e) {
 
