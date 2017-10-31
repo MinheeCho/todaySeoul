@@ -51,7 +51,7 @@ var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
 $$(document).on('DOMContentLoaded', function (e) {
-  //  document.addEventListener("deviceready", function () {
+    document.addEventListener("deviceready", function () {
         
     var apiList = myApp.formGetData('apiList');
     if (true || apiList == undefined || apiList == null) {
@@ -77,12 +77,10 @@ $$(document).on('DOMContentLoaded', function (e) {
     if (useList == undefined || useList == null) {
         myApp.formStoreData('useList', {
             'items': [
-                /*
                 {
                     'title': '서울 소식', 'iconNm': 'weather', 'useYn': true,
                     'func': 'getNews()', 'itemCd' : 1
                 }
-                */
             ]
         });
     }
@@ -104,9 +102,6 @@ $$(document).on('DOMContentLoaded', function (e) {
         window.location.reload(true);
     });
 
-    if(useList.length == 0) {
-        myApp.popup('.popup-itemAddPopup');
-    }
     setMainList(useList.items);
 /*
     $$('[name=day_0]').parents('td').on('click', function(){
@@ -144,7 +139,7 @@ $$(document).on('DOMContentLoaded', function (e) {
    // Template7.module.init(); 
    // 수정하고 커밋하고 빌드 하고 실행 
 
-//}, false);
+}, false);
 });
 
 
