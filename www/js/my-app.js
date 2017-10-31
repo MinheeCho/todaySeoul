@@ -137,7 +137,6 @@ $$(document).on('DOMContentLoaded', function (e) {
         $$(this).find('span').css('color', 'blue');
         $$(this).css('border-bottom', 'solid 1px blue');
     });
-    Template7.module.init();
 }, false);
 });
 
