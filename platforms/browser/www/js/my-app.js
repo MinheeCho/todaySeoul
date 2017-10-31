@@ -51,7 +51,7 @@ var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
 $$(document).on('DOMContentLoaded', function (e) {
-    document.addEventListener("deviceready", function () {
+  //  document.addEventListener("deviceready", function () {
         
     var apiList = myApp.formGetData('apiList');
     if (true || apiList == undefined || apiList == null) {
@@ -87,7 +87,6 @@ $$(document).on('DOMContentLoaded', function (e) {
 
     // itemSetting
     $$('.popup-itemAddPopup').on('popup:open', function () {
-        console.log('아이템 세팅');
         var useList = myApp.formGetData('useList').items;
         var apiList = myApp.formGetData('apiList').items;
 
@@ -139,7 +138,7 @@ $$(document).on('DOMContentLoaded', function (e) {
    // Template7.module.init(); 
    // 수정하고 커밋하고 빌드 하고 실행 
 
-}, false);
+//}, false);
 });
 
 
@@ -149,7 +148,6 @@ function setItemList(useList, apiList) {
     for (var i = 0; i < apiList.length; i++) {
         var isUsed = false;
         for (var j = 0; j < useList.length; j++) {
-            console.log(apiList[i].title + '_' + useList[j].title);
             if (apiList[i].title == useList[j].title) {
                 apiList[i].useYn = true;
                 //isUsed = true;
@@ -215,7 +213,6 @@ function setItemList(useList, apiList) {
             // 추가
             var title = $$(this).parents('div.item-title').find('span').text();
             var deleteItemidx = 0;
-            console.log(useList);
             for (var i = 0; i < apiList.length; i++) {
                 if (apiList[i].title == title) {
                     console.log('찾아땅');
@@ -223,7 +220,6 @@ function setItemList(useList, apiList) {
                     useList.push(apiList[i]);
                 }
             }
-            console.log(useList);
             $$(this).parents('li div.item-title').animate({
                 'margin-left': -1000
             });
@@ -243,7 +239,6 @@ function setItemList(useList, apiList) {
         var itemImgEl = $$('<img />').addClass('custom-item-img').attr('src', './img/weather/snow.png');
         var itemTitleSpan = $$('<span />').addClass('custom-item-title').css('margin-left', '10px');
         itemTitleSpan.text(apiList[i].title);
-        console.log(i + '=' + apiList[i].title);
 
         var swipeoutDiv = $$('<div />').addClass('swipeout-actions-right');
         var swipeoutA = $$('<a />').addClass('swipeout-delete').attr('href', '#').text('삭제');
