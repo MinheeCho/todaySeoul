@@ -102,7 +102,7 @@ $$(document).on('DOMContentLoaded', function (e) {
 
 
     setMainList(useList.items);
-
+/*
     $$('[name=day_0]').parents('td').on('click', function(){
         $$('.swiper-slide').hide(200);
         $$('.swiper-slide.current').show();  
@@ -111,7 +111,7 @@ $$(document).on('DOMContentLoaded', function (e) {
         $$(this).find('span').css('color', 'blue');
         $$(this).css('border-bottom', 'solid 1px blue');
     });
-    $$('[name=day_1]').parents('td').on('click', function(){
+  */  $$('[name=day_1]').parents('td').on('click', function(){
         $$('.swiper-slide').hide(200);
         $$('.swiper-slide.today').show();
         $$('.weatherTd').find('span').css('color', '#000');
@@ -175,7 +175,7 @@ function setItemList(useList, apiList) {
         });
 
         var itemImgEl = $$('<img />').addClass('custom-item-img').attr('src', './img/weather/snow.png');
-        var itemTitleSpan = $$('<span />').addClass('custom-item-title');
+        var itemTitleSpan = $$('<span />').addClass('custom-item-title').css('margin-left','10px');
         itemTitleSpan.text(useList[i].title);
 
         var swipeoutDiv = $$('<div />').addClass('swipeout-actions-right');
@@ -237,7 +237,7 @@ function setItemList(useList, apiList) {
 
         });
         var itemImgEl = $$('<img />').addClass('custom-item-img').attr('src', './img/weather/snow.png');
-        var itemTitleSpan = $$('<span />').addClass('custom-item-title');
+        var itemTitleSpan = $$('<span />').addClass('custom-item-title').css('margin-left', '10px');
         itemTitleSpan.text(apiList[i].title);
         console.log(i + '=' + apiList[i].title);
 
@@ -321,6 +321,8 @@ function setItemList(useList, apiList) {
 
         myApp.closeModal('.popup-itemAddPopup');
     });
+
+    window.location.reload(true);
 }
 
 function getCulture() {
@@ -355,7 +357,7 @@ function getCulture() {
             
             for(var i = 0; i < items.length; i++) {
                 var el =$$($$('#culture').html());
-                el.find('img').attr('src', items[i].MAIN_IMG).css('width','60px').css('height','60px');
+                el.find('img').attr('src', items[i].MAIN_IMG).css('width','120px').css('height','120px');
                 el.find('.itemTitle').html(items[i].TITLE);
                 if(items[i].TITLE.length > 15) {
                     //el.find('.item-title').html(items[i].TITLE.substring(0, 14));
@@ -646,6 +648,7 @@ function getWeather() {
         data: data,
         async: false,
         success: function (json) {
+            /*
             console.log(json)
             var items = json.response.body.items.item;
             // TODO 데이터 못 가져오는 경우 처리 하자
@@ -697,6 +700,7 @@ function getWeather() {
                     //myApp.swiper('.swiper-container').update();
                 }  //
             });
+            */
 
         }
     });
