@@ -50,8 +50,13 @@ var cultureKey = '725853687069616d3130335374486d56';
 var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
+
+document.addEventListener("deviceready", function () {
+    window.location.reload(true);
+}, false);
+
 $$(document).on('DOMContentLoaded', function (e) {
-    document.addEventListener("deviceready", function () {
+
         
     var apiList = myApp.formGetData('apiList');
     if (true || apiList == undefined || apiList == null) {
@@ -137,7 +142,6 @@ $$(document).on('DOMContentLoaded', function (e) {
         $$(this).find('span').css('color', 'blue');
         $$(this).css('border-bottom', 'solid 1px blue');
     });
-}, false);
 });
 
 
