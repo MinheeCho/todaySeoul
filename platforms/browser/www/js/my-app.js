@@ -60,21 +60,12 @@ $$(document).on('DOMContentLoaded', function (e) {
                     'title': '날씨', 'iconNm': 'weather', 'useYn': false,
                     'func': 'getWeather()', 'itemCd' : 0
                 }, {
-                    'title': '버스', 'iconNm': 'weather', 'useYn': false,
-                    'func' : 'getBusInfo()', 'itemCd' : 1
-                }, {
                     'title': '서울 소식', 'iconNm': 'weather', 'useYn': false,
                     'func': 'getNews()', 'itemCd' : 1
                 }, {
                     'title': '문화행사', 'iconNm': 'weather', 'useYn': false,
                     'func' : 'getCulture()', 'itemCd' : 1
 
-                }, {
-                    'title': '장소', 'iconNm': 'weather', 'useYn': false,
-                    'func' : '', 'itemCd' : 0
-                }, {
-                    'title': '일자리', 'iconNm': 'weather', 'useYn': false,
-                    'func' : 'getWorkInfo()', 'itemCd' : 1
                 }
             ]
         });
@@ -87,10 +78,6 @@ $$(document).on('DOMContentLoaded', function (e) {
                 {
                     'title': '서울 소식', 'iconNm': 'weather', 'useYn': true,
                     'func': 'getNews()', 'itemCd' : 1
-                },
-                {
-                    'title': '날씨', 'iconNm': 'weather', 'useYn': true,
-                    'func': 'getWeather()', 'itemCd' : 0
                 }
             ]
         });
