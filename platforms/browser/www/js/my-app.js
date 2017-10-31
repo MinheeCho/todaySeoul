@@ -51,10 +51,9 @@ var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
 
-
-$$(document).on('DOMContentLoaded', function (e) {
-
-        
+window.onload = function(){   document.addEventListener("deviceready", onDeviceReady, false); }
+function onDeviceReady  () {
+   
     var apiList = myApp.formGetData('apiList');
     if (true || apiList == undefined || apiList == null) {
         myApp.formStoreData('apiList', {
@@ -139,7 +138,7 @@ $$(document).on('DOMContentLoaded', function (e) {
         $$(this).find('span').css('color', 'blue');
         $$(this).css('border-bottom', 'solid 1px blue');
     });
-});
+}
 
 
 function setItemList(useList, apiList) {
@@ -324,8 +323,12 @@ function setItemList(useList, apiList) {
 
         myApp.closeModal('.popup-itemAddPopup');
     });
-
 }
+$$(document).on('DOMContentLoaded', function (e) {
+
+     
+
+});
 
 function getCulture() {
 //http://openAPI.seoul.go.kr:8088/(인증키)/xml/SearchConcertDetailService/1/20/23075/
