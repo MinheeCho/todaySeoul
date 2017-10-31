@@ -77,10 +77,12 @@ $$(document).on('DOMContentLoaded', function (e) {
     if (useList == undefined || useList == null) {
         myApp.formStoreData('useList', {
             'items': [
-                {
+                /*            
+                 {
                     'title': '서울 소식', 'iconNm': 'weather', 'useYn': true,
                     'func': 'getNews()', 'itemCd' : 1
                 }
+                */
             ]
         });
     }
