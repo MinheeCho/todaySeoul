@@ -51,6 +51,8 @@ var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
 $$(document).on('DOMContentLoaded', function (e) {
+    document.addEventListener("deviceready", function () {
+        
     var apiList = myApp.formGetData('apiList');
     if (true || apiList == undefined || apiList == null) {
         myApp.formStoreData('apiList', {
@@ -135,7 +137,8 @@ $$(document).on('DOMContentLoaded', function (e) {
         $$(this).find('span').css('color', 'blue');
         $$(this).css('border-bottom', 'solid 1px blue');
     });
-
+    Template7.module.init();
+}, false);
 });
 
 
@@ -322,7 +325,6 @@ function setItemList(useList, apiList) {
         myApp.closeModal('.popup-itemAddPopup');
     });
 
-    window.location.reload(true);
 }
 
 function getCulture() {
@@ -958,6 +960,7 @@ function setMainList(useList) {
         mainContnet.append(cardDiv);
     }
 
+    
 }
 
 $$('.card-content').on('click', function () {
