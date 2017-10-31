@@ -77,10 +77,12 @@ $$(document).on('DOMContentLoaded', function (e) {
     if (useList == undefined || useList == null) {
         myApp.formStoreData('useList', {
             'items': [
+                /*
                 {
                     'title': '서울 소식', 'iconNm': 'weather', 'useYn': true,
                     'func': 'getNews()', 'itemCd' : 1
                 }
+                */
             ]
         });
     }
@@ -102,7 +104,9 @@ $$(document).on('DOMContentLoaded', function (e) {
         window.location.reload(true);
     });
 
-
+    if(useList.length == 0) {
+        myApp.popup('.popup-itemAddPopup');
+    }
     setMainList(useList.items);
 /*
     $$('[name=day_0]').parents('td').on('click', function(){
@@ -138,6 +142,8 @@ $$(document).on('DOMContentLoaded', function (e) {
         $$(this).css('border-bottom', 'solid 1px blue');
     });
    // Template7.module.init(); 
+   // 수정하고 커밋하고 빌드 하고 실행 
+
 }, false);
 });
 
