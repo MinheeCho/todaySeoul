@@ -18,11 +18,11 @@
 	<icon src="res/icon.png" />
     <platform name="android">
         <preference name="android-minSdkVersion" value="14" />
-		<icon src="res/android/mipmap-hdpi/ic_launcher.png" density="ldpi" />
-		<icon src="res/android/mipmap-mdpi/ic_launcher.png" density="mdpi" />
-		<icon src="res/android/mipmap-xhdpi/ic_launcher.png" density="xhdpi" />
-		<icon src="res/android/mipmap-xxhdpi/ic_launcher.png" density="xxhdpi" />
-		<icon src="res/android/mipmap-xxxhdpi/ic_launcher.png" density="xxxhdpi" />
+		<icon src="res/android/Icon-hdpi.png" density="hdpi" />
+		<icon src="res/android/Icon-mdpi.png" density="mdpi" />
+		<icon src="res/android/Icon-xhdpi.png" density="xhdpi" />
+		<icon src="res/android/Icon-xxhdpi.png" density="xxhdpi" />
+		<icon src="res/android/Icon-xxxhdpi.png" density="xxhdpi" />
 		<allow-intent href="market:*" />
     </platform>
     <platform name="ios">
