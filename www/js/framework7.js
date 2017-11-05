@@ -7942,7 +7942,7 @@ return t7;
             }
             // swipeout 수정 2017-10-28 조민희
             //el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
-                el.find('.swipeout-content').transform('translate3d(' + -37 + 'px,0,0)').transitionEnd(function () {                
+                el.find('.swipeout-content').transform('translate3d(' + -40 + 'px,0,0)').transitionEnd(function () {                
                 el.trigger('opened swipeout:opened');
                 if (callback) callback.call(el[0]);
             });

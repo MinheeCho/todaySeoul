@@ -2,11 +2,8 @@
 <widget id="com.minhee.app.seoul" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>오늘도 서울</name>
     <description>
-        A basic Framework7 template for PhoneGap.
+        서울시 공공데이터 활용 앱
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

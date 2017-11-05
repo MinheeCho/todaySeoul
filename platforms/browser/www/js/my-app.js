@@ -50,28 +50,42 @@ var cultureKey = '725853687069616d3130335374486d56';
 var airInfoKey = '685561537769616d3537704d4c7574';
 // 서울시 일자리
 var jobKey = '4761504c4c69616d3833644f564652';
+
+// 공공데이터 포탈 키
+const commonServiceKey = '3CUnKdEh3QjU+i/kTH3KAdj9nbe+zk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg==';
+
 $$(document).on('DOMContentLoaded', function (e) {
   //  document.addEventListener("deviceready", function () {
-        
-    var apiList = myApp.formGetData('apiList');
-    if (true || apiList == undefined || apiList == null) {
-        myApp.formStoreData('apiList', {
-            // itemCd : 1 - 더보기, 0 - 더보기 아님
-            'items': [
-                {
-                    'title': '날씨', 'iconNm': 'weather', 'useYn': false,
-                    'func': 'getWeather()', 'itemCd' : 0
-                }, {
-                    'title': '서울 소식', 'iconNm': 'weather', 'useYn': false,
-                    'func': 'getNews()', 'itemCd' : 1
-                }, {
-                    'title': '문화행사', 'iconNm': 'weather', 'useYn': false,
-                    'func' : 'getCulture()', 'itemCd' : 1
+    var ptrContent = $$('.pull-to-refresh-content');
+    
+   // Add 'refresh' listener on it
+   ptrContent.on('ptr:refresh', function (e) {
+       setTimeout(function(){
+           window.location.reload(true);
+       }, 0);
+   });      
 
-                }
-            ]
-        });
-    }
+    var apiList = myApp.formGetData('apiList');
+    myApp.formStoreData('apiList', {
+        // itemCd : 1 - 더보기, 0 - 더보기 아님
+        'items': [
+            {
+                'title': '날씨', 'iconNm': 'weather', 'useYn': false,
+                'func': 'getWeather()', 'itemCd' : 0
+            }, {
+                'title': '서울 소식', 'iconNm': 'weather', 'useYn': false,
+                'func': 'getNews()', 'itemCd' : 1
+            }, {
+                'title': '문화행사', 'iconNm': 'weather', 'useYn': false,
+                'func' : 'getCulture()', 'itemCd' : 1
+
+            }, {
+                'title': '버스도착정보', 'iconNm': 'bus', 'useYn': false,
+                'func' : 'getBus()', 'itemCd' : 1
+
+            }
+        ]
+    });
 
     var useList = myApp.formGetData('useList');
     if (useList == undefined || useList == null) {
@@ -86,6 +100,7 @@ $$(document).on('DOMContentLoaded', function (e) {
             ]
         });
     }
+
 
     // itemSetting
     $$('.popup-itemAddPopup').on('popup:open', function () {
@@ -171,19 +186,19 @@ function setItemList(useList, apiList) {
         contentDiv.append(innerDiv);
         li.append(contentDiv);
 
-        var deleteImgEl = $$('<img />').addClass('custom-icon-delete').attr('src', './img/list/delete.png');
+        var deleteImgEl = $$('<img />').addClass('custom-icon-delete').attr('src', './img/list/delete.png').css('padding', '10px');;
         deleteImgEl.on('click', function (e) {
             // 삭제
             myApp.swipeoutOpen($$(this).parents('li'), 'right', function () {
             });
         });
 
-        var itemImgEl = $$('<img />').addClass('custom-item-img').attr('src', './img/weather/snow.png');
+        var itemImgEl = $$('<img />').addClass('custom-item-img').attr('src', './img/weather/snow.png');//.css('padding', '10px');
         var itemTitleSpan = $$('<span />').addClass('custom-item-title').css('margin-left','10px');
         itemTitleSpan.text(useList[i].title);
 
-        var swipeoutDiv = $$('<div />').addClass('swipeout-actions-right');
-        var swipeoutA = $$('<a />').addClass('swipeout-delete').attr('href', '#').text('삭제');
+        var swipeoutDiv = $$('<div />').addClass('swipeout-actions-right').css('z-index', 10);
+        var swipeoutA = $$('<a />').addClass('swipeout-delete').attr('href', '#').text('삭제').css('padding', '20px');
         swipeoutDiv.append(swipeoutA);
 
         var sortDiv = $$('<div />').addClass('sortable-handler');
@@ -193,7 +208,7 @@ function setItemList(useList, apiList) {
         var list = $$('ul.usedItem');
         titleDiv.append(deleteImgEl);
         li.append(sortDiv);
-        titleDiv.append(itemImgEl);
+        //titleDiv.append(itemImgEl);
         titleDiv.append(itemTitleSpan);
         list.append(li);
     }
@@ -210,14 +225,14 @@ function setItemList(useList, apiList) {
         contentDiv.append(innerDiv);
         li.append(contentDiv);
 
-        var addImgEl = $$('<img />').addClass('custom-icon-add').attr('src', './img/list/add.png');
+        var addImgEl = $$('<img />').addClass('custom-icon-add').attr('src', './img/list/add.png').css('padding', '10px');
         addImgEl.on('click', function (e) {
             // 추가
             var title = $$(this).parents('div.item-title').find('span').text();
             var deleteItemidx = 0;
             for (var i = 0; i < apiList.length; i++) {
                 if (apiList[i].title == title) {
-                    console.log('찾아땅');
+                    
                     deleteItemidx = i;
                     useList.push(apiList[i]);
                 }
@@ -254,7 +269,7 @@ function setItemList(useList, apiList) {
         li.removeClass('swipeout')
         titleDiv.append(addImgEl);
 
-        titleDiv.append(itemImgEl);
+        //titleDiv.append(itemImgEl);
         titleDiv.append(itemTitleSpan);
 
         list.append(li);
@@ -268,7 +283,11 @@ function setItemList(useList, apiList) {
         var deleteItemidx = 0;
         for (var i = 0; i < useList.length; i++) {
             if (useList[i].title == title) {
-                console.log('찾아땅');
+                if(title == '버스도착정보') {
+                    myApp.formStoreData('busInfo', {
+                        'items': []
+                    });
+                }
                 deleteItemidx = i;
             }
         }
@@ -297,21 +316,17 @@ function setItemList(useList, apiList) {
     });
 
     $$('div.sortable li').on('sortable:sort', function (e) {
-        console.log(e);
-        console.log(useList);
+        
         var startIdx = e.detail.startIndex;
         var newIdx = e.detail.newIndex;
         var tmpData = useList.slice(startIdx, startIdx + 1)[0];
         useList.splice(startIdx, 1);
         useList.splice(newIdx, 0, tmpData);
-        console.log(useList);
+        
     });
 
     $$('.settingOk').on('click', function () {
-        console.log('dfsdfsfdsf');
-        console.log(useList);
-        console.log(apiList);
-
+        
         myApp.formStoreData('useList', {
             'items': useList
         });
@@ -350,8 +365,6 @@ function getCulture() {
         //data: data,
         async: false,
         success: function (json) {
-            console.log('28923842384');
-            console.log(json.SearchConcertDetailService.row);
             var items = json.SearchConcertDetailService.row;
     
             
@@ -376,7 +389,6 @@ function getCulture() {
 
             //el.find('.titmeTitle').on('click', function(){
                     // 템플릿을 복사해서
-                    console.log('하하하하');
                     
                     var tmp = $$($$('.popup-news-0').html());
                     tmp.find('.card-header span.t1').text(items[i].CODE_NAME);
@@ -396,7 +408,6 @@ function getCulture() {
                     popupDiv.append(tmp);
                     $$('body').append(popupDiv);
                     //myApp.popup('.popup-culture-' + i);
-                    console.log('하하하하');
                     // 팝업을 띄운다!
             //    });
                 
@@ -436,12 +447,12 @@ function getNews() {
         'END_INDEX': 5
         //'BLOG_ID': 15 : 건강, 21 : 교통, 22 : 안전, 23 : 주택, 24 : 경제, 25 : 환경, 26 : 문화/관광, 27 : 복지, 28 : 건설, 29 : 세금재정, 30 : 행정, 34 : 여성가족
     };
-    var url = 'http://openapi.seoul.go.kr:8088/'+newsKey+'/json/SeoulNewsList/1/500/';
+    var url = 'http://openapi.seoul.go.kr:8088/'+newsKey+'/json/SeoulNewsList/1/50/';
     var html = '';
     var tmpDiv = $$('<div />');
     var listDiv = $$('<div />').addClass('list-block');
     var listUl = $$('<ul />');
-
+    /*
     var newList = new Array();
     newList.push('<span style="font-weight:bold;">문화/관광</span> &nbsp;[한양도성박물관] 외국인 단체 교육프로그램 \'Hanyangdoseong Walking Tour\' 11월 교육생 모집 안내</span>');
     newList.push('<span style="font-weight:bold;">건강</span> &nbsp;보건환경톡톡 제34호, 2017년 10월</span>');
@@ -478,7 +489,7 @@ function getNews() {
     tmpDiv.append(listDiv);
     listDiv.append(listUl);
     html = tmpDiv.html();
-    /*
+    */
     $$.ajax({
         type: 'GET',
         dataType: 'jsonp',
@@ -490,9 +501,9 @@ function getNews() {
         // 이 속성을 생략하면 callback 파라미터 변수명으로 전달된다.
         jsonp: 'stone',
         success: function (json) {
-            console.log(json);
-            var data = JSON.parse(json).SeoulNewsList.row;
-            data.sort(customSort);
+            
+            var items = JSON.parse(json).SeoulNewsList.row;
+            items.sort(customSort);
            
             for(var i = 0; i < 5; i++) {
                 var listLi = $$('<li />');
@@ -505,6 +516,27 @@ function getNews() {
                 listItemSpanA.addClass('open-popup');
                 listItemSpanA.attr('data-popup','.popup-news-' + (i+1));
                 
+                // 팝업 세팅
+                var tmp = $$($$('.popup-news-' + (i+1)));
+                $$(tmp.find('.card-header span')[0]).text(items[i].BLOG_NAME);
+                $$(tmp.find('.card-header span')[1]).text(items[i].POST_TITLE);
+                if(items[i].THUMB_URI.length > 5) {
+                    tmp.find('.card-content img').attr('src', items[i].THUMB_URI.replace('|', '').replace('%7C', ''));
+                    tmp.find('.card-content img').css('display', 'block');
+                }else {
+                    tmp.find('.card-content img').css('display', 'none');
+                }
+                //var content = '<span style="font-weight:bold;">장소</span> : ' + items[i].GCODE + ' ' + items[i].PLACE + '<br />';
+                //content += '<span style="font-weight:bold;">시간</span> : ' + msg + '<br />';
+                //content += '<span style="font-weight:bold;">가격</span> : ' + items[i].USE_FEE + '<br />';
+                //content += '<span style="font-weight:bold;">나이</span> : ' + items[i].USE_TRGT + '<br />';
+                //content += '<span style="font-weight:bold;">문의</span> : ' + items[i].INQUIRY + '<br />';
+                var content = items[i].POST_CONTENT;
+                if(content == '') {
+                    content += '<a href="' + items[i].ORG_LINK + '">' + items[i].ORG_LINK + '</a>';
+                }
+                tmp.find('.card-content-inner').append(content);
+
 
                 listLi.append(listItemDiv);
                 listItemDiv.append(listItemInnerDiv)
@@ -512,10 +544,9 @@ function getNews() {
                 listItemInnerTitle.append(listItemCdNmSpan);
                 listItemInnerTitle.append(listItemSpan);
                 listItemInnerTitle.append(listItemSpanA)
-                listItemCdNmSpan.text(data[i].BLOG_NAME);
-                listItemSpanA.text(data[i].POST_TITLE);
-                console.log(data[i]);
-                newDeatil = data[i];
+                listItemCdNmSpan.text(items[i].BLOG_NAME);
+                listItemSpanA.text(items[i].POST_TITLE);
+                newDeatil = items[i];
 
                 listUl.append(listLi);
 
@@ -529,7 +560,7 @@ function getNews() {
         }
 
     });
-    */
+    
     return html;
 }
 
@@ -585,8 +616,8 @@ function getWeather() {
         2: '있음'
     }
 
-    //const wheaterServiceKey = '3CUnKdEh3QjU%2Bi%2FkTH3KAdj9nbe%2Bzk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg%3D%3D';
-    const wheaterServiceKey = '3CUnKdEh3QjU+i/kTH3KAdj9nbe+zk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg==';
+    //const commonServiceKey = '3CUnKdEh3QjU%2Bi%2FkTH3KAdj9nbe%2Bzk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg%3D%3D';
+    
     // ForecastGrib
     var date = new Date();
     var month = date.getMonth() + 1;
@@ -605,7 +636,7 @@ function getWeather() {
     var numOfRows = 10;
     var pageNo = 1;
     var data = {
-        'serviceKey': wheaterServiceKey,
+        'serviceKey': commonServiceKey,
         'base_date': base_date,
         'base_time': base_time,
         'nx': nx,
@@ -616,7 +647,7 @@ function getWeather() {
     };
 
     data = {
-        'serviceKey': wheaterServiceKey,
+        'serviceKey': commonServiceKey,
         'base_date': base_date,
         'base_time': base_time,
         'nx': nx,
@@ -707,7 +738,7 @@ function getWeather() {
 
     numOfRows = 225;
     data = {
-        'serviceKey': wheaterServiceKey,
+        'serviceKey': commonServiceKey,
         'base_date': base_date,
         'base_time': '0500',
         'nx': nx,
@@ -788,7 +819,7 @@ function getWeather() {
                 arr[j].morningData = moringData;
                 arr[j].afternoonData = afternoonData;
             }
-            console.log(arr);
+            
             for (var i = 0; i < arr.length; i++) {
                 var morningForm = $$('div.next td.morning')[i];
                 var afternoonForm = $$('div.next td.afternoon')[i];
@@ -871,9 +902,380 @@ function getWeather() {
     return form.html();
 }
 
+function getBusNum () {
+    var busNum = $$('#busNumInput').val();
+    var url = 'http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList';
+    var data = {
+        serviceKey : commonServiceKey,
+        strSrch : busNum
+    }
+    console.log('하하');
+    $$('#busCotnentLoding_1').show();
+    $$.ajax({
+        url: url,
+        contentType: "OPTIONS",
+        dataType : 'xml',
+        crossDomain: true,
+        data: data,
+        async: false,
+        success: function (json) {
+            var busArr = new Array();
+            var xml = json.substring(json.indexOf('<msgBody>'), json.indexOf('</msgBody>') + '</msgBody>'.length);
+            var parser=new DOMParser();
+            var xmlDoc=parser.parseFromString(xml,"text/xml");
+            var x=xmlDoc.documentElement.childNodes;
+            for (i=0;i<x.length;i++)
+            {   
+                var obj = new Object();
+                
+                var parser2 =new DOMParser();
+                var xmlDoc2 =parser2.parseFromString('<itemList>' + x[i].innerHTML + '</itemList>',"text/xml");                    
+                var x2 = xmlDoc2.documentElement.childNodes;
+                for (var j=0; j<x2.length; j++) {
+                obj[x2[j].nodeName] = x2[j].innerHTML;
+                //노선 유형 (1:공항, 2:마을, 3:간선, 4:지선, 5:순환, 6:광역, 7:인천, 8:경기
+                    if(x2[j].nodeName == 'routeType') {
+                        var colors = {
+                            '1': '#3d5bab',
+                            '2': '#5bb025',
+                            '3': '#3d5bab',
+                            '4': '#5bb025',
+                            '5': '#f2b70a',
+                            '6': '#f72f08',
+                            '7': '#3d5bab',
+                            '8': '#3d5bab'
+                        };
+                        var busCd = {
+                            '1': '공항',
+                            '2': '마을',
+                            '3': '간선',
+                            '4': '지선',
+                            '5': '순환',
+                            '6': '광역',
+                            '7': '인천',
+                            '8': '경기'
+                        };
+                        obj['color'] = colors[x2[j].innerHTML];
+                        obj['busCdNm'] = busCd[x2[j].innerHTML];
+                    }
+                    
+                }
+                busArr.push(obj);
+            }
+            // li 그리기
+            var ul = $$('.popup-busEditPopup #busContent_1').find('ul');
+            ul.find('li').remove();   
+            for(var i = 0; i < busArr.length; i++) {
+                var li = $$('<li />');
+                var divContent = $$('<div />').addClass('item-content');
+                var divInner = $$('<div />').addClass('item-inner');
+                var divTitle = $$('<div />').addClass('item-title');
+                var busCdSpan = $$('<span />').css('color', busArr[i].color).text(busArr[i].busCdNm);
+                var busRouteId = busArr[i].busRouteId;
+                var busRouteNm = busArr[i].busRouteNm;
+
+                var busIdInput = $$('<input />').attr('type','hidden').val(busRouteId).addClass('busId');
+                var busNmInput = $$('<input />').attr('type','hidden').val(busRouteNm).addClass('busNm');
+                var busColorInput = $$('<input />').attr('type','hidden').val(busArr[i].color).addClass('busColor');
+                var busCdInput = $$('<input />').attr('type','hidden').val(busArr[i].busCdNm).addClass('busCd');
+
+                var busNumSpan = $$('<span />').text(busArr[i].busRouteNm).css('margin-left','10px').css('line-height', '35px').on('click', function(){
+                    $$('#busContent_1').hide();
+                    $$('#busContent_2').show();
+                    $$('#busCotnentLoding_2').show();
+                    var busId = $$(this).parents('li').find('.busId').val();
+                    var busNm = $$(this).parents('li').find('.busNm').val();
+                    var busColor = $$(this).parents('li').find('.busColor').val();
+                    var busCd = $$(this).parents('li').find('.busCd').val();
+
+                    selectBusStation(busId, busNm, busColor, busCd);
+                    
+                });
+
+                divTitle.append(busIdInput);
+                divTitle.append(busNmInput);
+                divTitle.append(busColorInput);
+                divTitle.append(busCdInput);
+
+                divTitle.append(busCdSpan);
+                divTitle.append(busNumSpan);
+                divInner.append(divTitle);
+                divContent.append(divInner);
+                li.append(divContent);
+                ul.append(li);
+            }
+
+            $$('#busCotnentLoding_1').hide();
+        }
+    });
+}
+
+function selectBusStation(busId, busNm, busColor, busCd) {
+    var url = 'http://ws.bus.go.kr/api/rest/busRouteInfo/getStaionByRoute';
+    var data = {
+        serviceKey : commonServiceKey,
+        busRouteId : busId
+    }
+    $$.ajax({
+        url: url,
+        contentType: "OPTIONS",
+        dataType : 'xml',
+        crossDomain: true,
+        data: data,
+        async: false,
+        success: function (json) {
+            
+            
+            var xml = json.substring(json.indexOf('<msgBody>'), json.indexOf('</msgBody>') + '</msgBody>'.length);
+            var parser=new DOMParser();
+            var xmlDoc=parser.parseFromString(xml,"text/xml");
+            var x=xmlDoc.documentElement.childNodes;
+            var stationArr = new Array();
+            for (i=0;i<x.length;i++)
+            {   
+                var obj = new Object();
+                
+                var parser2 =new DOMParser();
+                var xmlDoc2 =parser2.parseFromString('<itemList>' + x[i].innerHTML + '</itemList>',"text/xml");                    
+                var x2 = xmlDoc2.documentElement.childNodes;
+                for (var j=0; j<x2.length; j++) {
+                   obj[x2[j].nodeName] = x2[j].innerHTML;
+                   console.log(x2[j].nodeName + ' = ' + x2[j].innerHTML);
+                }
+                stationArr.push(obj);
+            }
+
+            var ul = $$('.popup-busEditPopup #busContent_2').find('ul');
+            ul.find('li').remove();   
+            for(var i = 0; i < stationArr.length; i++) {
+                var li = $$('<li />');
+                var divContent = $$('<div />').addClass('item-content');
+                var divInner = $$('<div />').addClass('item-inner');
+                var divTitle = $$('<div />').addClass('item-title');
+                var busCdSpan = $$('<span />').text(stationArr[i].busCdNm);
+                var busReturn = $$('<span />').text('[ 회차 ] ').css('font-weight', 'bold').css('font-size', '11px').css('position', 'absolute').css('top', '0px').css('left', '10px');
+                
+                // 전달용 인풋
+                var busIdInput = $$('<input />').attr('type','hidden').addClass('busId');
+                $$(busIdInput).val(busId);
+                var busNmInput = $$('<input />').attr('type','hidden').val(busNm).addClass('busNm');
+                var busColorInput = $$('<input />').attr('type','hidden').val(busColor).addClass('busColor');
+                var busCdInput = $$('<input />').attr('type','hidden').val(busCd).addClass('busCd');
+
+                var busStationIdInput = $$('<input />').attr('type','hidden').addClass('busStationId').val(stationArr[i].station);
+                var busStationNmInput = $$('<input />').attr('type','hidden').addClass('busStationNm').val(stationArr[i].stationNm);
+                var busStationSeqInput = $$('<input />').attr('type','hidden').addClass('busStationSeq').val(stationArr[i].seq);
+                console.log("씨발!!!!!!!!!!!!!!!!!" + stationArr[i].seq);
+ 
+                var busRouteId = stationArr[i].station;
+                var busStationNm = stationArr[i].stationNm;
+                var busNumSpan = $$('<span />').on('click', function(event){
+                    
+                    var clickedLink = this;
+
+                    var busId = $$(this).parents('li').find('.busId').val();
+                    var busNm = $$(this).parents('li').find('.busNm').val();
+                    var busColor = $$(this).parents('li').find('.busColor').val();
+                    var busCd = $$(this).parents('li').find('.busCd').val();
+                    var busStationId = $$(this).parents('li').find('.busStationId').val();
+                    var busStationNm = $$(this).parents('li').find('.busStationNm').val();
+                    var busStationSeq = $$(this).parents('li').find('.busStationSeq').val();
+
+
+                    var popoverHTML = '<div class="popover busPopover" style="text-align:center;">'+
+                                        '<div class="popover-inner">'+
+                                          '<div class="content-block" style="margin:32px 0px 0px 0px;">'+
+                                            '<p>노선번호 : '+ busNm +'</p>'+
+                                            '<p>정류장 : ' + busStationNm + '</p>' +
+                                            '<p>' + 
+                                            '</p>' +
+                                            '<p>위의 정보로 설정하시겠습니까 ?</p>' +
+                                            '<p class="buttons-row">' + 
+                                            '</p>' +
+                                          '</div>'+
+                                        '</div>'+
+                                      '</div>';
+                    
+                    myApp.popover(popoverHTML, clickedLink);
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busId).addClass('busId'));
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busNm).addClass('busNm'));
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busColor).addClass('busColor'));
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busCd).addClass('busCd'));
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busStationId).addClass('busStationId'));
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busStationNm).addClass('busStationNm'));
+                    $$('.busPopover').append($$('<input />').attr('type', 'hidden').val(busStationSeq).addClass('busStationSeq'));
+
+                    var busPopoverP = $$('<p />').addClass('buttons-row');
+                    var busPopoverOk = $$('<a />').addClass('button').addClass('button-raised').text('확인')
+                    var busPopoverCancel = $$('<a />').addClass('button').addClass('button-raised').text('취소')
+                    busPopoverOk.on('click', function() {
+                            // 버스 정보 저장
+                        var busId = $$(this).parents('div.busPopover').find('.busId').val();
+                        var busNm = $$(this).parents('div.busPopover').find('.busNm').val();
+                        var busColor = $$(this).parents('div.busPopover').find('.busColor').val();
+                        var busCd = $$(this).parents('div.busPopover').find('.busCd').val();
+                        var busStationId = $$(this).parents('div.busPopover').find('.busStationId').val();
+                        var busStationNm = $$(this).parents('div.busPopover').find('.busStationNm').val();
+                        var busStationSeq = $$(this).parents('div.busPopover').find('.busStationSeq').val();
+                        console.log(busId + '_' + busNm + '_' + busColor +'_' + busCd + '_' + busStationId + '_' + busStationNm + '_' + busStationSeq);
+
+                        myApp.formStoreData('busInfo', {
+                            'items': [
+                                 {
+                                    'busId': busId, 
+                                    'busNm': busNm, 
+                                    'busColor': busColor,
+                                    'busCd': busCd, 
+                                    'busStationId' : busStationId,
+                                    'busStationNm' : busStationNm,
+                                    'busStationSeq': busStationSeq
+                                }
+                            ]
+                        });
+
+                        myApp.closeModal('.busPopover');
+                        myApp.closeModal('.popup-busEditPopup');
+                        window.location.reload(true);
+                    });
+
+                    busPopoverCancel.on('click', function(){
+                        myApp.closeModal('.busPopover');
+                    });
+
+                    busPopoverP.append(busPopoverOk);
+                    busPopoverP.append(busPopoverCancel);
+                    $$('.busPopover').append(busPopoverP);
+
+                    
+
+                });
+                busNumSpan.css('margin-left','10px').css('line-height', '35px').text(busStationNm);
+
+
+                divTitle.append(busIdInput);
+                divTitle.append(busNmInput);
+                divTitle.append(busColorInput);
+                divTitle.append(busCdInput);
+                divTitle.append(busStationIdInput);
+                divTitle.append(busStationNmInput);
+                divTitle.append(busStationSeqInput);
+
+                divTitle.append(busCdSpan);
+                divTitle.append(busNumSpan);
+                if(stationArr[i].transYn == 'Y') {
+                    busNumSpan.css('line-height', '50px').css('font-weight', 'bold').addClass('stationNm');
+                    divInner.css('background-color', '#eeeeee');
+                    divTitle.append(busReturn);
+                }
+                divInner.append(divTitle);
+                divContent.append(divInner);
+                li.append(divContent);
+                ul.append(li);
+            }
+            $$('#busCotnentLoding_2').hide();
+        }
+    });
+}
+
+
+
+function editBusInfo() {
+    var busPopup = $$('.popup-busEditPopup');
+    $$('#busNumSearchBtn').on('click', function(){
+        getBusNum();
+    });
+
+    myApp.popup('.popup-busEditPopup');
+}
+
+function getBus() {
+    var busInfo = myApp.formGetData('busInfo');
+    if(busInfo == undefined || busInfo == null || busInfo.length == 0 || busInfo.items.length == 0) {
+        return '<div style="width:100%; height:100px; text-align:center;"><span style="line-height:100px;">버스를 <a href="#" onclick="editBusInfo();">등록</a>해주세요</span></div>';
+    }else {
+        //console.log(busId + '_' + busNm + '_' + busColor +'_' + busCd + '_' + busStationId + '_' + busStationNm);
+        console.log(busInfo.items[0].busId);
+        console.log(busInfo.items[0].busStationId);
+        console.log(busInfo.items[0].busStationSeq);
+        var data = {
+            "stId" : busInfo.items[0].busId,
+            "busRouteId" : busInfo.items[0].busStationId,
+            "serviceKey" : commonServiceKey,
+            "ord" : busInfo.items[0].busStationSeq
+        };
+        //http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByRoute?ServiceKey=3CUnKdEh3QjU%2Bi%2FkTH3KAdj9nbe%2Bzk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg%3D%3D&stId=122000047&busRouteId=100100290&ord=75
+        //http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByRoute?serviceKey=3CUnKdEh3QjU%2Bi%2FkTH3KAdj9nbe%2Bzk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg%3D%3D&stId=116000015&busRouteId=100100290&ord=117
+        var tmpKey = '3CUnKdEh3QjU%2Bi%2FkTH3KAdj9nbe%2Bzk9FtYymsgDK5VB7a1WnbqCzkibZJN80GXwDzXILTyZCBch6lF74sMlEYg%3D%3D';
+        var url = 'http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByRoute?serviceKey='+ tmpKey + '&stId='+busInfo.items[0].busStationId+'&busRouteId='+busInfo.items[0].busId+'&ord='+busInfo.items[0].busStationSeq;
+
+        var content = $$('<div />');
+        var contentClick = $$('<div />').addClass('busContent').on('click', function(){
+            console.log(1111111111111);
+            var busPopup = $$('.popup-busEditPopup');
+            $$('#busNumSearchBtn').on('click', function(){
+                getBusNum();
+            });
+        
+            myApp.popup('.popup-busEditPopup');
+        });
+        var contentInner_1 = $$('<div />').css('display', 'inline-block').css('margin-left', '15px');
+        var contentInner_2 = $$('<div />').css('display', 'inline-block').css('float', 'right').css('line-height', '30px');
+
+        var p1 = $$('<p />').text(busInfo.items[0].busNm).css('color', busInfo.items[0].busColor).css('font-size', '25px').css('margin', '0px');
+        var p2 = $$('<p />').text(busInfo.items[0].busStationNm).css('font-size', '15px').css('font-weight', 'bold').css('margin', '0px');
+        var p3 = $$('<p />').css('margin', '0px');
+        var p4 = $$('<p />').css('margin', '0px');
+
+        contentInner_1.append(p1);
+        contentInner_1.append(p2);
+        contentInner_2.append(p3);
+        contentInner_2.append(p4);
+
+        contentClick.append(contentInner_1);
+        contentClick.append(contentInner_2);
+        content.append(contentClick);
+
+        var html = '';
+        $$.ajax({
+            url: url,
+            contentType: "OPTIONS",
+            dataType : 'xml',
+            crossDomain: true,
+            //data: data,
+            async: false,
+            success: function (json) {        
+                var busArr = new Array();            
+                var xml = json.substring(json.indexOf('<msgBody>'), json.indexOf('</msgBody>') + '</msgBody>'.length);
+                var parser=new DOMParser();
+                var xmlDoc=parser.parseFromString(xml,"text/xml");
+                var x=xmlDoc.documentElement.childNodes;
+                for (i=0;i<x.length;i++)
+                {   
+                    var obj = new Object();
+                    
+                    var parser2 =new DOMParser();
+                    var xmlDoc2 =parser2.parseFromString('<itemList>' + x[i].innerHTML + '</itemList>',"text/xml");                    
+                    var x2 = xmlDoc2.documentElement.childNodes;
+                    for (var j=0; j<x2.length; j++) {
+                    obj[x2[j].nodeName] = x2[j].innerHTML;
+                    }
+                    busArr.push(obj);
+                }
+                console.log(busArr)
+                p3.text(busArr[0].arrmsg1);
+                p4.text(busArr[0].arrmsg2);
+
+            }, error : function(e) {
+                console.log(e);
+            }
+        });
+        return content;
+    }
+
+}
 
 function setMainList(useList) {
-    var mainContnet = $$('div[data-page=index] div.page-content');
+    var mainContnet = $$('div[data-page=index] div.page-content div.list-block');
     for (var i = 0; i < useList.length; i++) {
         // HTML Element Setting
         var cardDiv = $$('<div />').addClass('card');
@@ -894,7 +1296,7 @@ function setMainList(useList) {
             cardHeaderDivDetail.text('다음');
             cardHeaderDivDetail2.text('이전').css('margin-right','5px');
             cardHeaderDivDetail.on('click', function(){
-                console.log(34);
+                
                 var currntIdx = Number($$(this).parent().parent().parent().find('table.show').attr('idx'));
                 var tables = $$(this).parent().parent().parent().find('table');
                 currntIdx += 1;
@@ -906,7 +1308,7 @@ function setMainList(useList) {
 
                 }
 
-                console.log(currntIdx +'_'+tables.length);
+                
                 if(currntIdx + 1 == tables.length) {
                     cardHeaderDivDetail.hide();
                 }else {
@@ -920,7 +1322,7 @@ function setMainList(useList) {
             });
 
             cardHeaderDivDetail2.on('click', function(){
-                console.log(34);
+                
                 var currntIdx = Number($$(this).parent().parent().parent().find('table.show').attr('idx'));
                 var tables = $$(this).parent().parent().parent().find('table');
                 currntIdx -= 1;
@@ -932,7 +1334,7 @@ function setMainList(useList) {
 
                 }
 
-                console.log(currntIdx +'_'+tables.length);
+                
                 if(currntIdx - 1 == 0) {
                     cardHeaderDivDetail2.hide();
                 }else {
@@ -952,7 +1354,9 @@ function setMainList(useList) {
 
             cardHeaderDiv.append(cardHeaderDivOpt);
         }
+        if(useList[i].func != '') { 
         cardContentInnerDiv.append(eval(useList[i].func));
+        }
 
         // Main List Add
         mainContnet.append(cardDiv);
